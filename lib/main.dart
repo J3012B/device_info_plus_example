@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Device Info Plus Example'),
     );
   }
 }
@@ -48,19 +49,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -75,41 +63,140 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FutureBuilder(
+              future: DeviceInfoPlugin().androidInfo,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+
+                final androidInfo = snapshot.data!;
+
+                return Column(
+                  // Column is also a layout widget. It takes a list of children and
+                  // arranges them vertically. By default, it sizes itself to fit its
+                  // children horizontally, and tries to be as tall as its parent.
+                  //
+                  // Invoke "debug painting" (press "p" in the console, choose the
+                  // "Toggle Debug Paint" action from the Flutter Inspector in Android
+                  // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+                  // to see the wireframe for each widget.
+                  //
+                  // Column has various properties to control how it sizes itself and
+                  // how it positions its children. Here we use mainAxisAlignment to
+                  // center the children vertically; the main axis here is the vertical
+                  // axis because Columns are vertical (the cross axis would be
+                  // horizontal).
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Physical device: ${androidInfo.isPhysicalDevice.toString()}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Board: ${androidInfo.board}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Bootloader: ${androidInfo.bootloader}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Brand: ${androidInfo.brand}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Device: ${androidInfo.device}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Display: ${androidInfo.display}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Fingerprint: ${androidInfo.fingerprint}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Hardware: ${androidInfo.hardware}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Host: ${androidInfo.host}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Id: ${androidInfo.id}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Manufacturer: ${androidInfo.manufacturer}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Model: ${androidInfo.model}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Product: ${androidInfo.product}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Supported32BitAbis: ${androidInfo.supported32BitAbis}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Supported32BitAbis: ${androidInfo.supported64BitAbis}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "SupportedAbis: ${androidInfo.supportedAbis}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "SystemFeatures: ${androidInfo.systemFeatures}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Tags: ${androidInfo.tags}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Version.baseOS: ${androidInfo.version.baseOS}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Version.codename: ${androidInfo.version.codename}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Version.incremental: ${androidInfo.version.incremental}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Version.previewSdkInt: ${androidInfo.version.previewSdkInt}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Version.release: ${androidInfo.version.release}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Version.sdkInt: ${androidInfo.version.sdkInt}",
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Version.securityPatch: ${androidInfo.version.securityPatch}",
+                    ),
+                  ],
+                );
+              }),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
